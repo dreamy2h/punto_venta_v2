@@ -42,7 +42,13 @@ public class comunas {
         comunas dat = null;
         
         try {
-            String sql = "select id, nombre from comunas where id_provincia = " + id_provincia;
+            String sql = "select id, nombre from comunas"; 
+            if (id_provincia != 0) {
+                sql += " where id_provincia = " + id_provincia;
+            }
+            
+            sql += " order by nombre asc";
+            
             ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             

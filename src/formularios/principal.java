@@ -56,6 +56,7 @@ public class principal extends javax.swing.JFrame {
         mn_proveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/proveedor.png"))); // NOI18N
         mn_proveedor.setText("Proveedores");
 
+        it_mant_proveedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/proveedor_submenu.png"))); // NOI18N
         it_mant_proveedores.setText("Mantenedor de Proveedores");
         it_mant_proveedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

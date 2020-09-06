@@ -42,7 +42,14 @@ public class provincias {
         provincias dat = null;
         
         try {
-            String sql = "select id, nombre from provincias where id_region = " + id_region;
+            String sql = "select id, nombre from provincias";
+
+            if (id_region != 0) {
+                sql += " where id_region = " + id_region;
+            }
+            
+            sql += " order by nombre asc";
+            
             ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             

@@ -18,10 +18,13 @@ import javax.swing.JTextField;
 public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
     DefaultTableModel modelo = new DefaultTableModel();
     String opcion;
+    
     public frm_mantenedor_proveedores() {
         initComponents();
-        actualizar_grid_proveedores();
         llenar_cmb_regiones();
+        llenar_cmb_provincias();
+        llenar_cmb_comunas();
+        actualizar_grid_proveedores();
     }
 
     @SuppressWarnings("unchecked")
@@ -30,6 +33,7 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         btn_nuevo = new javax.swing.JButton();
+        btn_buscar = new javax.swing.JButton();
         btn_modificar = new javax.swing.JButton();
         btn_desactivar = new javax.swing.JButton();
         btn_aceptar = new javax.swing.JButton();
@@ -37,8 +41,6 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         grid_proveedores = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        txt_id = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txt_rut = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -64,7 +66,6 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
         jLabel13 = new javax.swing.JLabel();
         txt_resto_direccion = new javax.swing.JTextField();
 
-        setBackground(java.awt.SystemColor.desktop);
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
@@ -77,7 +78,8 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
         }
         setVisible(true);
 
-        jPanel1.setLayout(new java.awt.GridLayout(5, 1));
+        jPanel1.setBackground(java.awt.SystemColor.activeCaption);
+        jPanel1.setLayout(new java.awt.GridLayout(6, 1));
 
         btn_nuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/nuevo.png"))); // NOI18N
         btn_nuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -86,6 +88,14 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btn_nuevo);
+
+        btn_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/buscar.png"))); // NOI18N
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_buscar);
 
         btn_modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/modificar.png"))); // NOI18N
         btn_modificar.setEnabled(false);
@@ -137,15 +147,8 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(grid_proveedores);
 
+        jPanel2.setBackground(java.awt.SystemColor.activeCaption);
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos Proveedor"));
-
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel1.setLabelFor(txt_id);
-        jLabel1.setText("Identificador");
-        jLabel1.setToolTipText("");
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        txt_id.setEnabled(false);
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel2.setLabelFor(txt_rut);
@@ -155,7 +158,6 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
         jLabel2.setPreferredSize(new java.awt.Dimension(61, 14));
         jLabel2.setRequestFocusEnabled(false);
 
-        txt_rut.setEnabled(false);
         txt_rut.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_rutKeyTyped(evt);
@@ -169,7 +171,6 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
         jLabel3.setName(""); // NOI18N
         jLabel3.setPreferredSize(new java.awt.Dimension(61, 14));
 
-        txt_razon_social.setEnabled(false);
         txt_razon_social.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_razon_socialKeyTyped(evt);
@@ -181,7 +182,6 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
         jLabel9.setMinimumSize(new java.awt.Dimension(61, 14));
         jLabel9.setPreferredSize(new java.awt.Dimension(61, 14));
 
-        cmb_regiones.setEnabled(false);
         cmb_regiones.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmb_regionesItemStateChanged(evt);
@@ -197,7 +197,6 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
         jLabel10.setMaximumSize(new java.awt.Dimension(61, 14));
         jLabel10.setMinimumSize(new java.awt.Dimension(61, 14));
 
-        cmb_provincias.setEnabled(false);
         cmb_provincias.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmb_provinciasItemStateChanged(evt);
@@ -206,46 +205,63 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
 
         jLabel11.setText("Comuna");
 
-        cmb_comunas.setEnabled(false);
-
         jLabel8.setText("-");
 
-        txt_dv.setEnabled(false);
         txt_dv.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_dvKeyTyped(evt);
             }
         });
 
-        txt_numero.setEnabled(false);
+        txt_numero.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_numeroKeyTyped(evt);
+            }
+        });
 
         jLabel4.setText("Calle");
 
-        txt_calle.setEnabled(false);
+        txt_calle.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_calleKeyTyped(evt);
+            }
+        });
 
         jLabel12.setText("Número");
 
         jLabel5.setText("Correo Electrónico");
 
-        txt_email.setEnabled(false);
         txt_email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_emailActionPerformed(evt);
             }
         });
+        txt_email.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_emailKeyTyped(evt);
+            }
+        });
 
         jLabel7.setText("Fono 1");
 
-        txt_fono_1.setEnabled(false);
         txt_fono_1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_fono_1ActionPerformed(evt);
             }
         });
+        txt_fono_1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_fono_1KeyTyped(evt);
+            }
+        });
 
         jLabel6.setText("Fono 2");
 
-        txt_fono_2.setEnabled(false);
+        txt_fono_2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_fono_2KeyTyped(evt);
+            }
+        });
 
         jLabel13.setLabelFor(txt_razon_social);
         jLabel13.setText("Resto Dirección");
@@ -254,7 +270,6 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
         jLabel13.setName(""); // NOI18N
         jLabel13.setPreferredSize(new java.awt.Dimension(61, 14));
 
-        txt_resto_direccion.setEnabled(false);
         txt_resto_direccion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_resto_direccionKeyTyped(evt);
@@ -269,21 +284,17 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(cmb_comunas, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txt_rut, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txt_dv, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(cmb_regiones, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -319,14 +330,12 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_razon_social, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_calle, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_rut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
@@ -380,22 +389,22 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 972, Short.MAX_VALUE)))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 959, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addContainerGap(19, Short.MAX_VALUE)))
         );
 
         pack();
@@ -403,12 +412,18 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
 
     private void btn_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevoActionPerformed
         des_habilitar_proveedores(false, true);
-        limpiar_form_proveedores();
+        int respuesta = JOptionPane.showConfirmDialog(null, "¿Desea limpiar el formulario?", "¿Limpiar formulario?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (respuesta == 0) {
+            limpiar_form_proveedores();
+        }
         opcion = "nuevo";
+        txt_rut.requestFocus();
     }//GEN-LAST:event_btn_nuevoActionPerformed
 
     private void btn_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarActionPerformed
         des_habilitar_proveedores(false, true);
+        txt_rut.setEnabled(false);
+        txt_dv.setEnabled(false);
         opcion = "modificar";
     }//GEN-LAST:event_btn_modificarActionPerformed
 
@@ -417,8 +432,13 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_aceptarActionPerformed
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
-        des_habilitar_proveedores(true, false);
+        des_habilitar_proveedores(true, true);
+        btn_modificar.setEnabled(false);
+        btn_desactivar.setEnabled(false);
+        btn_aceptar.setEnabled(false);
+        btn_cancelar.setEnabled(false);
         limpiar_form_proveedores();
+        actualizar_grid_proveedores();
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
     private void grid_proveedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grid_proveedoresMouseClicked
@@ -454,16 +474,41 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_dvKeyTyped
 
     private void txt_razon_socialKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_razon_socialKeyTyped
-        valida_caracteres(100, txt_dv, evt);
+        valida_caracteres(100, txt_razon_social, evt);
     }//GEN-LAST:event_txt_razon_socialKeyTyped
 
     private void txt_resto_direccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_resto_direccionKeyTyped
-        // TODO add your handling code here:
+        valida_caracteres(100, txt_resto_direccion, evt);
     }//GEN-LAST:event_txt_resto_direccionKeyTyped
+
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+        actualizar_grid_proveedores();
+    }//GEN-LAST:event_btn_buscarActionPerformed
+
+    private void txt_calleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_calleKeyTyped
+        valida_caracteres(100, txt_calle, evt);
+    }//GEN-LAST:event_txt_calleKeyTyped
+
+    private void txt_numeroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_numeroKeyTyped
+        valida_caracteres(11, txt_numero, evt);
+    }//GEN-LAST:event_txt_numeroKeyTyped
+
+    private void txt_emailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_emailKeyTyped
+        valida_caracteres(100, txt_email, evt);
+    }//GEN-LAST:event_txt_emailKeyTyped
+
+    private void txt_fono_1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fono_1KeyTyped
+        valida_caracteres(11, txt_fono_1, evt);
+    }//GEN-LAST:event_txt_fono_1KeyTyped
+
+    private void txt_fono_2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fono_2KeyTyped
+        valida_caracteres(11, txt_fono_2, evt);
+    }//GEN-LAST:event_txt_fono_2KeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_aceptar;
+    private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_desactivar;
     private javax.swing.JButton btn_modificar;
@@ -472,7 +517,6 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cmb_provincias;
     private javax.swing.JComboBox<String> cmb_regiones;
     private javax.swing.JTable grid_proveedores;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -493,7 +537,6 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txt_email;
     private javax.swing.JTextField txt_fono_1;
     private javax.swing.JTextField txt_fono_2;
-    private javax.swing.JTextField txt_id;
     private javax.swing.JTextField txt_numero;
     private javax.swing.JTextField txt_razon_social;
     private javax.swing.JTextField txt_resto_direccion;
@@ -522,6 +565,7 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
     
     private void des_habilitar_proveedores(boolean a, boolean b) {
         btn_nuevo.setEnabled(a);
+        btn_buscar.setEnabled(a);
         btn_modificar.setEnabled(a);
         btn_desactivar.setEnabled(a);
         
@@ -531,18 +575,18 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
         txt_rut.setEnabled(b);
         txt_dv.setEnabled(b);
         txt_razon_social.setEnabled(b);
-        txt_calle.setEnabled(b);
-        txt_email.setEnabled(b);
-        txt_numero.setEnabled(b);
-        txt_resto_direccion.setEnabled(b);
-        txt_fono_1.setEnabled(b);
         cmb_regiones.setEnabled(b);
         cmb_provincias.setEnabled(b);
         cmb_comunas.setEnabled(b);
+        txt_calle.setEnabled(b);
+        txt_numero.setEnabled(b);
+        txt_resto_direccion.setEnabled(b);
+        txt_email.setEnabled(b);
+        txt_fono_1.setEnabled(b);
+        txt_fono_2.setEnabled(b);
     }
 
     private void limpiar_form_proveedores() {
-        txt_id.setText("");
         txt_rut.setText("");
         txt_dv.setText("");
         txt_razon_social.setText("");
@@ -552,43 +596,157 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
         txt_email.setText("");
         txt_fono_1.setText("");
         txt_fono_2.setText("");
+        
+        cmb_regiones.setSelectedIndex(0);
+        llenar_cmb_provincias();
+        llenar_cmb_comunas();
     }
 
     private void actualizar_grid_proveedores() {
         conexionMySQL mysql = new conexionMySQL();
         java.sql.Connection cn = mysql.conexion();
         
+        String rut = txt_rut.getText();
+        String dv = txt_dv.getText();
+        String razon_social = txt_razon_social.getText();
+        String calle = txt_calle.getText();
+        String numero = txt_numero.getText();
+        String resto_direccion = txt_resto_direccion.getText();
+        String fono_1 = txt_fono_1.getText();
+        String fono_2 = txt_fono_2.getText();
+        String email = txt_email.getText();
+        
+        provincias pv = (provincias) cmb_provincias.getSelectedItem();
+        int id_provincia = pv.getId();
+        regiones rg = (regiones) cmb_regiones.getSelectedItem();
+        int id_region = rg.getId();
+        comunas cm = (comunas) cmb_comunas.getSelectedItem();
+        int id_comuna = cm.getId();
+        
+        
         String consulta = "SELECT \n" +
-                        "    p.id, \n" +
                         "    concat(p.rut, '-', p.dv) as rut, \n" +
                         "    p.razon_social, \n" +
+                        "    c.nombre as comuna,\n" +
                         "    p.calle, \n" +
                         "    p.numero, \n" +
+                        "    p.resto_direccion,\n" +
                         "    p.email, \n" +
                         "    p.fono_1, \n" +
                         "    p.fono_2, \n" +
-                        "    p.id_comuna,\n" +
-                        "    c.nombre as comuna,\n" +
-                        "    pr.id as id_provincia,\n" +
-                        "    pr.nombre as provincia,\n" +
-                        "    r.id,\n" +
-                        "    r.nombre as region,\n" +
                         "    case when p.estado = 1 then 'Activo' else 'Desactivado' end as estado, \n" +
-                        "    p.rut, \n" +
-                        "    p.dv \n" +
+                        "    p.rut as rut_sdv, \n" +
+                        "    p.dv,\n" +
+                        "    c.nombre as comuna, \n" +
+                        "    pr.nombre as provincia, \n" +
+                        "    r.nombre as region \n" +
                         "FROM \n" +
-                        "    proveedores p\n" +
-                        "    inner join comunas c on p.id_comuna = c.id\n" +
-                        "    inner join provincias pr on c.id_provincia = pr.id\n" +
-                        "    inner join regiones r on pr.id_region = r.id";
+                        "	proveedores p\n" +
+                        "    left join comunas c on p.id_comuna = c.id\n" +
+                        "    left join provincias pr on c.id_provincia = pr.id\n" +
+                        "    left join regiones r on pr.id_region = r.id";
+        
+        String where = "";
+        
+        if (!"".equals(rut)) {
+            where = " where p.rut like '%" + rut + "%'";
+        }
+        
+        if (!"".equals(dv)) {
+            if (!"".equals(where)) {
+                where += " and p.dv = " + dv;
+            } else {
+                where = " where p.dv = " + dv;
+            }
+        }
+        
+        if (!"".equals(razon_social)) {
+            if (!"".equals(where)) {
+                where += " and p.razon_social like '%" + razon_social + "%'";
+            } else {
+                where = " where p.razon_social like '%" + razon_social + "%'";
+            }
+        }
+        
+        if (id_region != 0) {
+            if (!"".equals(where)) {
+                where += " and r.id = " + id_region;
+            } else {
+                where = " where r.id = " + id_region;
+            }
+        }
+        
+        if (id_provincia != 0) {
+            if (!"".equals(where)) {
+                where += " and pr.id = " + id_provincia;
+            } else {
+                where = " where pr.id = " + id_provincia;
+            }
+        }
+        
+        if (id_comuna != 0) {
+            if (!"".equals(where)) {
+                where += " and p.id_comuna = " + id_comuna;
+            } else {
+                where = " where p.id_comuna = " + id_comuna;
+            }
+        }
+        
+        if (!"".equals(calle)) {
+            if (!"".equals(where)) {
+                where += " and p.calle like '%" + calle + "%'";
+            } else {
+                where = " where p.calle like '%" + calle + "%'";
+            }
+        }
+        
+        if (!"".equals(numero)) {
+            if (!"".equals(where)) {
+                where += " and p.numero like '%" + numero + "%'";
+            } else {
+                where = " where p.numero like '%" + numero + "%'";
+            }
+        }
+        
+        if (!"".equals(resto_direccion)) {
+            if (!"".equals(where)) {
+                where += " and p.resto_direccion like '%" + resto_direccion + "%'";
+            } else {
+                where = " where p.resto_direccion like '%" + resto_direccion + "%'";
+            }
+        }
+        
+        if (!"".equals(email)) {
+            if (!"".equals(where)) {
+                where += " and p.email like '%" + email + "%'";
+            } else {
+                where = " where p.email like '%" + email + "%'";
+            }
+        }
+        
+        if (!"".equals(fono_1)) {
+            if (!"".equals(where)) {
+                where += " and p.fono_1 like '%" + fono_1 + "%'";
+            } else {
+                where = " where p.fono_1 like '%" + fono_1 + "%'";
+            }
+        }
+        
+        if (!"".equals(fono_2)) {
+            if (!"".equals(where)) {
+                where += " and p.fono_2 like '%" + fono_2 + "%'";
+            } else {
+                where = " where p.fono_2 like '%" + fono_2 + "%'";
+            }
+        }
+        
+        consulta += where;
+        
         modelo = new DefaultTableModel();
         Statement st;
   
-        modelo.addColumn("Id");
         modelo.addColumn("Rut");
         modelo.addColumn("Razón Social");
-        modelo.addColumn("Región");
-        modelo.addColumn("Provincia");
         modelo.addColumn("Comuna");
         modelo.addColumn("Calle");
         modelo.addColumn("Número");
@@ -606,10 +764,35 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
         
         grid_proveedores.setModel(modelo);
         
-        grid_proveedores.getColumnModel().getColumn(0).setMaxWidth(0);
-        grid_proveedores.getColumnModel().getColumn(0).setMinWidth(0);
-        grid_proveedores.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
-        grid_proveedores.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
+        grid_proveedores.getColumnModel().getColumn(3).setMaxWidth(0);
+        grid_proveedores.getColumnModel().getColumn(3).setMinWidth(0);
+        grid_proveedores.getTableHeader().getColumnModel().getColumn(3).setMaxWidth(0);
+        grid_proveedores.getTableHeader().getColumnModel().getColumn(3).setMinWidth(0);
+        
+        grid_proveedores.getColumnModel().getColumn(4).setMaxWidth(0);
+        grid_proveedores.getColumnModel().getColumn(4).setMinWidth(0);
+        grid_proveedores.getTableHeader().getColumnModel().getColumn(4).setMaxWidth(0);
+        grid_proveedores.getTableHeader().getColumnModel().getColumn(4).setMinWidth(0);
+        
+        grid_proveedores.getColumnModel().getColumn(5).setMaxWidth(0);
+        grid_proveedores.getColumnModel().getColumn(5).setMinWidth(0);
+        grid_proveedores.getTableHeader().getColumnModel().getColumn(5).setMaxWidth(0);
+        grid_proveedores.getTableHeader().getColumnModel().getColumn(5).setMinWidth(0);
+        
+        grid_proveedores.getColumnModel().getColumn(10).setMaxWidth(0);
+        grid_proveedores.getColumnModel().getColumn(10).setMinWidth(0);
+        grid_proveedores.getTableHeader().getColumnModel().getColumn(10).setMaxWidth(0);
+        grid_proveedores.getTableHeader().getColumnModel().getColumn(10).setMinWidth(0);
+        
+        grid_proveedores.getColumnModel().getColumn(11).setMaxWidth(0);
+        grid_proveedores.getColumnModel().getColumn(11).setMinWidth(0);
+        grid_proveedores.getTableHeader().getColumnModel().getColumn(11).setMaxWidth(0);
+        grid_proveedores.getTableHeader().getColumnModel().getColumn(11).setMinWidth(0);
+        
+        grid_proveedores.getColumnModel().getColumn(12).setMaxWidth(0);
+        grid_proveedores.getColumnModel().getColumn(12).setMinWidth(0);
+        grid_proveedores.getTableHeader().getColumnModel().getColumn(12).setMaxWidth(0);
+        grid_proveedores.getTableHeader().getColumnModel().getColumn(12).setMinWidth(0);
         
         grid_proveedores.getColumnModel().getColumn(13).setMaxWidth(0);
         grid_proveedores.getColumnModel().getColumn(13).setMinWidth(0);
@@ -621,38 +804,28 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
         grid_proveedores.getTableHeader().getColumnModel().getColumn(14).setMaxWidth(0);
         grid_proveedores.getTableHeader().getColumnModel().getColumn(14).setMinWidth(0);
         
-        grid_proveedores.getColumnModel().getColumn(15).setMaxWidth(0);
-        grid_proveedores.getColumnModel().getColumn(15).setMinWidth(0);
-        grid_proveedores.getTableHeader().getColumnModel().getColumn(15).setMaxWidth(0);
-        grid_proveedores.getTableHeader().getColumnModel().getColumn(15).setMinWidth(0);
-        
-        grid_proveedores.getColumnModel().getColumn(16).setMaxWidth(0);
-        grid_proveedores.getColumnModel().getColumn(16).setMinWidth(0);
-        grid_proveedores.getTableHeader().getColumnModel().getColumn(16).setMaxWidth(0);
-        grid_proveedores.getTableHeader().getColumnModel().getColumn(16).setMinWidth(0);
-        
-        grid_proveedores.getColumnModel().getColumn(17).setMaxWidth(0);
-        grid_proveedores.getColumnModel().getColumn(17).setMinWidth(0);
-        grid_proveedores.getTableHeader().getColumnModel().getColumn(17).setMaxWidth(0);
-        grid_proveedores.getTableHeader().getColumnModel().getColumn(17).setMinWidth(0);
-        
-        String[] dato = new String[10];
+        String[] dato = new String[15];
         
         try {
             st = cn.createStatement();
             ResultSet resultado = st.executeQuery(consulta);
             
             while (resultado.next()) {
-                dato[0] = resultado.getString(1);
-                dato[1] = resultado.getString(2);
-                dato[2] = resultado.getString(3);
-                dato[3] = resultado.getString(4);
-                dato[4] = resultado.getString(5);
-                dato[5] = resultado.getString(6);
-                dato[6] = resultado.getString(7);
-                dato[7] = resultado.getString(8);
-                dato[8] = resultado.getString(9);
-                dato[9] = resultado.getString(10);
+                dato[0] = resultado.getString("rut");
+                dato[1] = resultado.getString("razon_social");
+                dato[2] = resultado.getString("comuna");
+                dato[3] = resultado.getString("calle");
+                dato[4] = resultado.getString("numero");
+                dato[5] = resultado.getString("resto_direccion");
+                dato[6] = resultado.getString("email");
+                dato[7] = resultado.getString("fono_1");
+                dato[8] = resultado.getString("fono_2");
+                dato[9] = resultado.getString("estado");
+                dato[10] = resultado.getString("rut_sdv");
+                dato[11] = resultado.getString("dv");
+                dato[12] = resultado.getString("comuna");
+                dato[13] = resultado.getString("provincia");
+                dato[14] = resultado.getString("region");
                 
                 modelo.addRow(dato);
             }
@@ -760,16 +933,16 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
             email_validate = true;
         } else {
             if (!"".equals(mensaje)) { mensaje += "\n"; }
-            mensaje += "Correo electrónico, tiene caracteres no permitidos";
+            mensaje += "Correo electrónico, formato de e-mail incorrecto";
         }
         
         if (rut_validate && dv_validate && razon_social_validate && calle_validate && numero_validate && resto_direccion_validate && fono_1_validate && fono_2_validate && email_validate) {
             switch (opcion) {
                 case "nuevo":
-                    guardar_proveedor(Integer.parseInt(rut), dv, razon_social, calle, Integer.parseInt(numero), resto_direccion, email, Integer.parseInt(fono_1), Integer.parseInt(fono_2));
+                    guardar_proveedor(rut, dv, razon_social, calle, numero, resto_direccion, email, fono_1, fono_2);
                     break;
                 case "modificar":
-                    /*modificar_proveedor(rut, dv, razon_social, calle, numero, comuna, fono_1, fono_2, email);*/
+                    modificar_proveedor(rut, dv, razon_social, calle, numero, resto_direccion, email, fono_1, fono_2);
                     break;
             }
         } else {
@@ -777,15 +950,12 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
         }
     }
 
-    private void guardar_proveedor(int rut, String dv, String razon_social, String calle, int numero, String resto_direccion, String email, int fono_1, int fono_2) {
-        JOptionPane.showMessageDialog(null, "entra");
+    private void guardar_proveedor(String rut, String dv, String razon_social, String calle, String numero, String resto_direccion, String email, String fono_1, String fono_2) {
         conexionMySQL mysql = new conexionMySQL();
         java.sql.Connection cn = mysql.conexion();
-        int id_comuna = 0;
-        if(!cmb_comunas.getSelectedItem().toString().isEmpty()){ 
-            comunas cm = (comunas) cmb_comunas.getSelectedItem();
-            id_comuna = cm.getId();
-        }
+        
+        comunas cm = (comunas) cmb_comunas.getSelectedItem();
+        int id_comuna = cm.getId();
         
         String insert = "insert into proveedores (rut, dv, razon_social, id_comuna, calle, numero, resto_direccion, email, fono_1, fono_2, estado) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
@@ -793,16 +963,16 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
         
         try {
             PreparedStatement st = cn.prepareStatement(insert);
-            st.setInt(1, rut);
+            st.setInt(1, Integer.parseInt(rut));
             st.setString(2, dv);
             st.setString(3, razon_social);
-            st.setInt(4, id_comuna);
+            if (id_comuna != 0) { st.setInt(4, id_comuna); } else { st.setString(4, null); }
             st.setString(5, calle);
-            st.setInt(6, numero);
+            if (!"".equals(numero)) { st.setInt(6, Integer.parseInt(numero)); } else { st.setString(6, null); }
             st.setString(7, resto_direccion);
             st.setString(8, email);
-            st.setInt(9, fono_1);
-            st.setInt(10, fono_2);
+            if (!"".equals(fono_1)) { st.setInt(9, Integer.parseInt(fono_1)); } else { st.setString(9, null); }
+            if (!"".equals(fono_1)) { st.setInt(10, Integer.parseInt(fono_2)); } else { st.setString(10, null); }
             st.setInt(11, estado);
 
             st.execute();
@@ -818,29 +988,37 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
         }
     }
 
-    private void modificar_proveedor(int rut, String dv, String nombre, String direccion, int fono_1, int fono_2, int fono_11, int fono_21, String email) {
+    private void modificar_proveedor(String rut, String dv, String razon_social, String calle, String numero, String resto_direccion, String email, String fono_1, String fono_2) {
         conexionMySQL mysql = new conexionMySQL();
         java.sql.Connection cn = mysql.conexion();
         
-        String update = "update proveedores set nombre = ?, direccion = ?, fono_1 = ?, fono_2 = ?, email = ? where id = ?";
+        String update = "update proveedores set razon_social = ?, id_comuna = ?, calle = ?, numero = ?, resto_direccion = ?, email = ?, fono_1 = ?, fono_2 = ? where rut = ?";
         
-        int id = Integer.parseInt(txt_id.getText());
+        comunas cm = (comunas) cmb_comunas.getSelectedItem();
+        int id_comuna = cm.getId();
         
         try {
             PreparedStatement st = cn.prepareStatement(update);
-            st.setString(1, nombre);
-            st.setString(2, direccion);
-            st.setInt(3, fono_1);
-            st.setInt(4, fono_2);
-            st.setString(5, email);
-            st.setInt(6, id);
+            st.setString(1, razon_social);
+            if (id_comuna != 0) { st.setInt(2, id_comuna); } else { st.setString(2, null); }
+            st.setString(3, calle);
+            if (!"".equals(numero)) { st.setInt(4, Integer.parseInt(numero)); } else { st.setString(4, null); }
+            st.setString(5, resto_direccion);
+            st.setString(6, email);
+            if (!"".equals(fono_1)) { st.setInt(7, Integer.parseInt(fono_1)); } else { st.setString(7, null); }
+            if (!"".equals(fono_2)) { st.setInt(8, Integer.parseInt(fono_2)); } else { st.setString(8, null); }
+            st.setInt(9, Integer.parseInt(rut));
 
             st.execute();
             cn.close();
             
-            actualizar_grid_proveedores();
+            des_habilitar_proveedores(true, true);
+            btn_modificar.setEnabled(false);
+            btn_desactivar.setEnabled(false);
+            btn_aceptar.setEnabled(false);
+            btn_cancelar.setEnabled(false);
             limpiar_form_proveedores();
-            des_habilitar_proveedores(true, false);
+            actualizar_grid_proveedores();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error en la query" + e);
         }
@@ -849,19 +1027,53 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
     private void seleccionar_proveedor() {
         int seleccion_fila = grid_proveedores.getSelectedRow();
         
-        txt_id.setText(String.valueOf(modelo.getValueAt(seleccion_fila, 0)));
-        txt_rut.setText(String.valueOf(modelo.getValueAt(seleccion_fila, 8)));
-        txt_dv.setText(String.valueOf(modelo.getValueAt(seleccion_fila, 9)));
-        txt_razon_social.setText(String.valueOf(modelo.getValueAt(seleccion_fila, 2)));
-        txt_calle.setText(String.valueOf(modelo.getValueAt(seleccion_fila, 3)));
-        txt_numero.setText(String.valueOf(modelo.getValueAt(seleccion_fila, 3)));
-        txt_email.setText(String.valueOf(modelo.getValueAt(seleccion_fila, 4)));
-        txt_fono_1.setText(String.valueOf(modelo.getValueAt(seleccion_fila, 5)));
-        txt_fono_2.setText(String.valueOf(modelo.getValueAt(seleccion_fila, 6)));
+        String numero = String.valueOf(modelo.getValueAt(seleccion_fila, 4));
+        String fono_1 = String.valueOf(modelo.getValueAt(seleccion_fila, 7));
+        String fono_2 = String.valueOf(modelo.getValueAt(seleccion_fila, 8));
         
+        String region = String.valueOf(modelo.getValueAt(seleccion_fila, 14));
+        String provincia = String.valueOf(modelo.getValueAt(seleccion_fila, 13));
+        String comuna =  String.valueOf(modelo.getValueAt(seleccion_fila, 12));
+        
+        txt_rut.setText(String.valueOf(modelo.getValueAt(seleccion_fila, 10)));
+        txt_dv.setText(String.valueOf(modelo.getValueAt(seleccion_fila, 11)));
+        txt_razon_social.setText(String.valueOf(modelo.getValueAt(seleccion_fila, 1)));
+        
+        for (int i = 0; i < cmb_regiones.getModel().getSize(); i++) {
+            Object region_ = cmb_regiones.getModel().getElementAt(i);
+            if(region_.toString().equals(region)){
+                cmb_regiones.setSelectedItem(region_);
+                break;
+            }
+        }
+        
+        for (int i = 0; i < cmb_provincias.getModel().getSize(); i++) {
+            Object provincia_ = cmb_provincias.getModel().getElementAt(i);
+            if(provincia_.toString().equals(provincia)){
+                cmb_provincias.setSelectedItem(provincia_);
+                break;
+            }
+        }
+        
+        for (int i = 0; i < cmb_comunas.getModel().getSize(); i++) {
+            Object comuna_ = cmb_comunas.getModel().getElementAt(i);
+            if(comuna_.toString().equals(comuna)){
+                cmb_comunas.setSelectedItem(comuna_);
+                break;
+            }
+        }
+        
+        txt_calle.setText(String.valueOf(modelo.getValueAt(seleccion_fila, 3)));
+        if (numero != "null") { txt_numero.setText(numero); } else { txt_numero.setText(""); }
+        txt_resto_direccion.setText(String.valueOf(modelo.getValueAt(seleccion_fila, 5)));
+        txt_email.setText(String.valueOf(modelo.getValueAt(seleccion_fila, 6)));
+        if (fono_1 != "null") { txt_fono_1.setText(fono_1); } else { txt_fono_1.setText(""); }
+        if (fono_2 != "null") { txt_fono_2.setText(fono_2); } else { txt_fono_2.setText(""); }
                         
-        btn_modificar.setEnabled(true);
-        btn_desactivar.setEnabled(true);
+        des_habilitar_proveedores(true, false);
+        btn_nuevo.setEnabled(false);
+        btn_buscar.setEnabled(false);
+        btn_cancelar.setEnabled(true);
     }
     
     private void valida_caracteres(int numerocarateres, JTextField objeto, java.awt.event.KeyEvent evt) {

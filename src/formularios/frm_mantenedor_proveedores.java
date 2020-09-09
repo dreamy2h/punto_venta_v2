@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
     DefaultTableModel modelo = new DefaultTableModel();
     String opcion;
+    String estado = "";
     
     public frm_mantenedor_proveedores() {
         initComponents();
@@ -108,6 +109,11 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
 
         btn_desactivar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/eliminar.png"))); // NOI18N
         btn_desactivar.setEnabled(false);
+        btn_desactivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_desactivarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btn_desactivar);
 
         btn_aceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/aceptar.png"))); // NOI18N
@@ -171,6 +177,11 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
         jLabel3.setName(""); // NOI18N
         jLabel3.setPreferredSize(new java.awt.Dimension(61, 14));
 
+        txt_razon_social.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_razon_socialFocusLost(evt);
+            }
+        });
         txt_razon_social.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_razon_socialKeyTyped(evt);
@@ -221,6 +232,11 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Calle");
 
+        txt_calle.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_calleFocusLost(evt);
+            }
+        });
         txt_calle.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_calleKeyTyped(evt);
@@ -231,6 +247,11 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Correo Electrónico");
 
+        txt_email.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_emailFocusLost(evt);
+            }
+        });
         txt_email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_emailActionPerformed(evt);
@@ -270,6 +291,11 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
         jLabel13.setName(""); // NOI18N
         jLabel13.setPreferredSize(new java.awt.Dimension(61, 14));
 
+        txt_resto_direccion.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_resto_direccionFocusLost(evt);
+            }
+        });
         txt_resto_direccion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_resto_direccionKeyTyped(evt);
@@ -504,6 +530,37 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
     private void txt_fono_2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fono_2KeyTyped
         valida_caracteres(11, txt_fono_2, evt);
     }//GEN-LAST:event_txt_fono_2KeyTyped
+
+    private void txt_razon_socialFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_razon_socialFocusLost
+        String razon_social = txt_razon_social.getText();
+        txt_razon_social.setText(razon_social.toUpperCase());
+    }//GEN-LAST:event_txt_razon_socialFocusLost
+
+    private void txt_calleFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_calleFocusLost
+        String calle = txt_calle.getText();
+        txt_calle.setText(calle.toUpperCase());
+    }//GEN-LAST:event_txt_calleFocusLost
+
+    private void txt_resto_direccionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_resto_direccionFocusLost
+        String resto_direccion = txt_resto_direccion.getText();
+        txt_resto_direccion.setText(resto_direccion.toUpperCase());
+    }//GEN-LAST:event_txt_resto_direccionFocusLost
+
+    private void txt_emailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_emailFocusLost
+        String email = txt_email.getText();
+        txt_email.setText(email.toUpperCase());
+    }//GEN-LAST:event_txt_emailFocusLost
+
+    private void btn_desactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_desactivarActionPerformed
+        String estado_ = "activar";
+        if ("Activo".equals(estado)) {
+            estado_ = "desactivar";
+        }
+        int respuesta = JOptionPane.showConfirmDialog(null, "¿Desea " + estado_ + " al proveedor " + txt_razon_social.getText() + "?", "¿Desactivar Proveedor?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (respuesta == 0) {
+            desactivar_proveedor();
+        }
+    }//GEN-LAST:event_btn_desactivarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1023,6 +1080,40 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Error en la query" + e);
         }
     } 
+  
+    private void desactivar_proveedor() {
+        conexionMySQL mysql = new conexionMySQL();
+        java.sql.Connection cn = mysql.conexion();
+        
+        String update = "update proveedores set estado = ? where rut = ?";
+        
+        int estado_ = 0;
+        
+        if ("Desactivado".equals(estado)) {
+            estado_ = 1;
+        } 
+        
+        int rut = Integer.parseInt(txt_rut.getText());
+        
+        try {
+            PreparedStatement st = cn.prepareStatement(update);
+            st.setInt(1, estado_);
+            st.setInt(2, rut);
+
+            st.execute();
+            cn.close();
+            
+            des_habilitar_proveedores(true, true);
+            btn_modificar.setEnabled(false);
+            btn_desactivar.setEnabled(false);
+            btn_aceptar.setEnabled(false);
+            btn_cancelar.setEnabled(false);
+            limpiar_form_proveedores();
+            actualizar_grid_proveedores();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error en la query" + e);
+        }
+    }
     
     private void seleccionar_proveedor() {
         int seleccion_fila = grid_proveedores.getSelectedRow();
@@ -1034,6 +1125,8 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
         String region = String.valueOf(modelo.getValueAt(seleccion_fila, 14));
         String provincia = String.valueOf(modelo.getValueAt(seleccion_fila, 13));
         String comuna =  String.valueOf(modelo.getValueAt(seleccion_fila, 12));
+        
+        estado = String.valueOf(modelo.getValueAt(seleccion_fila, 9));
         
         txt_rut.setText(String.valueOf(modelo.getValueAt(seleccion_fila, 10)));
         txt_dv.setText(String.valueOf(modelo.getValueAt(seleccion_fila, 11)));
@@ -1064,12 +1157,18 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
         }
         
         txt_calle.setText(String.valueOf(modelo.getValueAt(seleccion_fila, 3)));
-        if (numero != "null") { txt_numero.setText(numero); } else { txt_numero.setText(""); }
+        if (!"null".equals(numero)) { txt_numero.setText(numero); } else { txt_numero.setText(""); }
         txt_resto_direccion.setText(String.valueOf(modelo.getValueAt(seleccion_fila, 5)));
         txt_email.setText(String.valueOf(modelo.getValueAt(seleccion_fila, 6)));
-        if (fono_1 != "null") { txt_fono_1.setText(fono_1); } else { txt_fono_1.setText(""); }
-        if (fono_2 != "null") { txt_fono_2.setText(fono_2); } else { txt_fono_2.setText(""); }
-                        
+        if (!"null".equals(fono_1)) { txt_fono_1.setText(fono_1); } else { txt_fono_1.setText(""); }
+        if (!"null".equals(fono_2)) { txt_fono_2.setText(fono_2); } else { txt_fono_2.setText(""); }
+        
+        if ("Activo".equals(estado)) {
+            btn_desactivar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/eliminar.png")));
+        } else {
+            btn_desactivar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/activar.png")));
+        }
+        
         des_habilitar_proveedores(true, false);
         btn_nuevo.setEnabled(false);
         btn_buscar.setEnabled(false);

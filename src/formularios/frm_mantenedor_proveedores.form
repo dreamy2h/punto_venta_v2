@@ -117,6 +117,9 @@
             </Property>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_desactivarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_aceptar">
           <Properties>
@@ -344,6 +347,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txt_razon_social">
           <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txt_razon_socialFocusLost"/>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_razon_socialKeyTyped"/>
           </Events>
         </Component>
@@ -436,6 +440,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txt_calle">
           <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txt_calleFocusLost"/>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_calleKeyTyped"/>
           </Events>
         </Component>
@@ -451,6 +456,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txt_email">
           <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txt_emailFocusLost"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_emailActionPerformed"/>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_emailKeyTyped"/>
           </Events>
@@ -496,6 +502,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txt_resto_direccion">
           <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txt_resto_direccionFocusLost"/>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_resto_direccionKeyTyped"/>
           </Events>
         </Component>

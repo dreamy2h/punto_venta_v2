@@ -94,7 +94,8 @@ public class principal extends javax.swing.JFrame {
         mn_entradas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/mercaderia.png"))); // NOI18N
         mn_entradas.setText("Mercadería");
 
-        it_facturas.setText("Facturas");
+        it_facturas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/mercaderia_submenu.png"))); // NOI18N
+        it_facturas.setText("Ingresar Facturas");
         it_facturas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 it_facturasActionPerformed(evt);

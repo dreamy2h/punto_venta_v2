@@ -10,6 +10,7 @@ public class principal extends javax.swing.JFrame {
     private void initComponents() {
 
         escritorio = new javax.swing.JDesktopPane();
+        lbl_usuario = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         mn_clientes = new javax.swing.JMenu();
         it_mant_clientes = new javax.swing.JMenuItem();
@@ -18,7 +19,8 @@ public class principal extends javax.swing.JFrame {
         mn_productos = new javax.swing.JMenu();
         it_mant_productos = new javax.swing.JMenuItem();
         it_fechas_vencimiento = new javax.swing.JMenuItem();
-        it_lista_precios = new javax.swing.JMenuItem();
+        it_lista_precios_cli = new javax.swing.JMenuItem();
+        it_lista_precios_prov = new javax.swing.JMenuItem();
         mn_entradas = new javax.swing.JMenu();
         it_facturas = new javax.swing.JMenuItem();
         mn_ventas = new javax.swing.JMenu();
@@ -27,15 +29,28 @@ public class principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        lbl_usuario.setBackground(new java.awt.Color(41, 117, 154));
+        lbl_usuario.setFont(new java.awt.Font("Trajan Pro", 1, 24)); // NOI18N
+        lbl_usuario.setForeground(new java.awt.Color(255, 255, 51));
+        lbl_usuario.setText("1 - zamyr");
+
+        escritorio.setLayer(lbl_usuario, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 474, Short.MAX_VALUE)
+            .addGroup(escritorioLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_usuario)
+                .addContainerGap(559, Short.MAX_VALUE))
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 339, Short.MAX_VALUE)
+            .addGroup(escritorioLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_usuario)
+                .addContainerGap(303, Short.MAX_VALUE))
         );
 
         jMenuBar1.setFont(new java.awt.Font("Adobe Garamond Pro Bold", 0, 18)); // NOI18N
@@ -70,6 +85,7 @@ public class principal extends javax.swing.JFrame {
         mn_productos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/producto.png"))); // NOI18N
         mn_productos.setText("Productos");
 
+        it_mant_productos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/producto_submenu.png"))); // NOI18N
         it_mant_productos.setText("Mantenedor de Productos");
         it_mant_productos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,16 +102,19 @@ public class principal extends javax.swing.JFrame {
         });
         mn_productos.add(it_fechas_vencimiento);
 
-        it_lista_precios.setText("Lista de Precios");
-        mn_productos.add(it_lista_precios);
+        it_lista_precios_cli.setText("Lista de Precios Clientes");
+        mn_productos.add(it_lista_precios_cli);
+
+        it_lista_precios_prov.setText("Lista de Precios Proveedores");
+        mn_productos.add(it_lista_precios_prov);
 
         jMenuBar1.add(mn_productos);
 
         mn_entradas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/mercaderia.png"))); // NOI18N
-        mn_entradas.setText("Mercadería");
+        mn_entradas.setText("Compras");
 
         it_facturas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/mercaderia_submenu.png"))); // NOI18N
-        it_facturas.setText("Ingresar Facturas");
+        it_facturas.setText("Documentos");
         it_facturas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 it_facturasActionPerformed(evt);
@@ -160,9 +179,11 @@ public class principal extends javax.swing.JFrame {
     }//GEN-LAST:event_mn_usuariosActionPerformed
 
     private void it_mant_productosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_it_mant_productosActionPerformed
+        String usuario =  lbl_usuario.getText();
         mantenedor_productos productos = new mantenedor_productos();
         escritorio.add(productos);
         productos.setVisible(true);
+        productos.usuario = usuario;
     }//GEN-LAST:event_it_mant_productosActionPerformed
 
     private void it_fechas_vencimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_it_fechas_vencimientoActionPerformed
@@ -170,9 +191,11 @@ public class principal extends javax.swing.JFrame {
     }//GEN-LAST:event_it_fechas_vencimientoActionPerformed
 
     private void it_mant_proveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_it_mant_proveedoresActionPerformed
+        String usuario =  lbl_usuario.getText();
         frm_mantenedor_proveedores proveedores = new frm_mantenedor_proveedores();
         escritorio.add(proveedores);
         proveedores.setVisible(true);
+        proveedores.usuario = usuario;
     }//GEN-LAST:event_it_mant_proveedoresActionPerformed
 
     private void it_facturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_it_facturasActionPerformed
@@ -219,12 +242,14 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenuItem it_facturas;
     private javax.swing.JMenuItem it_fechas_vencimiento;
-    private javax.swing.JMenuItem it_lista_precios;
+    private javax.swing.JMenuItem it_lista_precios_cli;
+    private javax.swing.JMenuItem it_lista_precios_prov;
     private javax.swing.JMenuItem it_mant_clientes;
     private javax.swing.JMenuItem it_mant_productos;
     private javax.swing.JMenuItem it_mant_proveedores;
     private javax.swing.JMenuItem it_mant_usuarios;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JLabel lbl_usuario;
     private javax.swing.JMenu mn_clientes;
     private javax.swing.JMenu mn_entradas;
     private javax.swing.JMenu mn_productos;

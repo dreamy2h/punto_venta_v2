@@ -19,6 +19,7 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
     DefaultTableModel modelo = new DefaultTableModel();
     String opcion;
     String estado = "";
+    String usuario;
     
     public frm_mantenedor_proveedores() {
         initComponents();
@@ -1014,7 +1015,10 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
         comunas cm = (comunas) cmb_comunas.getSelectedItem();
         int id_comuna = cm.getId();
         
-        String insert = "insert into proveedores (rut, dv, razon_social, id_comuna, calle, numero, resto_direccion, email, fono_1, fono_2, estado) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String[] parts = usuario.split(" - ");
+        String id_usuario = parts[0]; // 123
+        
+        String insert = "insert into proveedores (rut, dv, razon_social, id_comuna, calle, numero, resto_direccion, email, fono_1, fono_2, estado, id_usuario) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         int estado = 1;
         
@@ -1031,6 +1035,7 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
             if (!"".equals(fono_1)) { st.setInt(9, Integer.parseInt(fono_1)); } else { st.setString(9, null); }
             if (!"".equals(fono_1)) { st.setInt(10, Integer.parseInt(fono_2)); } else { st.setString(10, null); }
             st.setInt(11, estado);
+            st.setInt(12, Integer.parseInt(id_usuario));
 
             st.execute();
             cn.close();
@@ -1049,10 +1054,13 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
         conexionMySQL mysql = new conexionMySQL();
         java.sql.Connection cn = mysql.conexion();
         
-        String update = "update proveedores set razon_social = ?, id_comuna = ?, calle = ?, numero = ?, resto_direccion = ?, email = ?, fono_1 = ?, fono_2 = ? where rut = ?";
+        String update = "update proveedores set razon_social = ?, id_comuna = ?, calle = ?, numero = ?, resto_direccion = ?, email = ?, fono_1 = ?, fono_2 = ?, id_usuario = ? where rut = ?";
         
         comunas cm = (comunas) cmb_comunas.getSelectedItem();
         int id_comuna = cm.getId();
+        
+        String[] parts = usuario.split(" - ");
+        String id_usuario = parts[0]; // 123
         
         try {
             PreparedStatement st = cn.prepareStatement(update);
@@ -1064,7 +1072,8 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
             st.setString(6, email);
             if (!"".equals(fono_1)) { st.setInt(7, Integer.parseInt(fono_1)); } else { st.setString(7, null); }
             if (!"".equals(fono_2)) { st.setInt(8, Integer.parseInt(fono_2)); } else { st.setString(8, null); }
-            st.setInt(9, Integer.parseInt(rut));
+            st.setInt(9, Integer.parseInt(id_usuario));
+            st.setInt(10, Integer.parseInt(rut));
 
             st.execute();
             cn.close();
@@ -1085,9 +1094,12 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
         conexionMySQL mysql = new conexionMySQL();
         java.sql.Connection cn = mysql.conexion();
         
-        String update = "update proveedores set estado = ? where rut = ?";
+        String update = "update proveedores set estado = ?, id_usuario = ? where rut = ?";
         
         int estado_ = 0;
+        
+        String[] parts = usuario.split(" - ");
+        String id_usuario = parts[0]; // 123
         
         if ("Desactivado".equals(estado)) {
             estado_ = 1;
@@ -1098,7 +1110,8 @@ public class frm_mantenedor_proveedores extends javax.swing.JInternalFrame {
         try {
             PreparedStatement st = cn.prepareStatement(update);
             st.setInt(1, estado_);
-            st.setInt(2, rut);
+            st.setInt(2, Integer.parseInt(id_usuario));
+            st.setInt(3, rut);
 
             st.execute();
             cn.close();

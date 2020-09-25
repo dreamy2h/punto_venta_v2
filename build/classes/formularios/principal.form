@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.9" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <Properties>
@@ -58,6 +58,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="it_mant_productos">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/iconos/producto_submenu.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Mantenedor de Productos"/>
               </Properties>
               <Events>
@@ -72,9 +75,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="it_fechas_vencimientoActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="it_lista_precios">
+            <MenuItem class="javax.swing.JMenuItem" name="it_lista_precios_cli">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Lista de Precios"/>
+                <Property name="text" type="java.lang.String" value="Lista de Precios Clientes"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="it_lista_precios_prov">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Lista de Precios Proveedores"/>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -84,7 +92,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/iconos/mercaderia.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Mercader&#xed;a"/>
+            <Property name="text" type="java.lang.String" value="Compras"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="it_facturas">
@@ -92,7 +100,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/iconos/mercaderia_submenu.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Ingresar Facturas"/>
+                <Property name="text" type="java.lang.String" value="Documentos"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="it_facturasActionPerformed"/>
@@ -170,15 +178,39 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="474" max="32767" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="lbl_usuario" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="559" max="32767" attributes="0"/>
+              </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="339" max="32767" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="lbl_usuario" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="303" max="32767" attributes="0"/>
+              </Group>
           </Group>
         </DimensionLayout>
       </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="lbl_usuario">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="9a" green="75" red="29" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Trajan Pro" size="24" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="33" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="1 - zamyr"/>
+          </Properties>
+        </Component>
+      </SubComponents>
     </Container>
   </SubComponents>
 </Form>

@@ -434,19 +434,20 @@ public class mantenedor_productos extends javax.swing.JInternalFrame {
         
         String descripcion = txt_descripcion.getText();
         
-        String consulta = "SELECT \n" +
-                        "    p.id,\n" +
-                        "    p.codigo,\n" +
-                        "    p.nombre,\n" +
-                        "    p.stock,\n" +
-                        "    c.nombre as categoria,\n" +
-                        "    um.glosa as unidad_medida,\n" +
-                        "    p.descripcion,\n" +
-                        "    case when p.estado = 0 then 'Desactivado' else 'Activo' end as estado\n" +
-                        "FROM \n" +
-                        "    productos p\n" +
-                        "    inner join categorias c on p.id_categoria = c.id\n" +
-                        "    inner join prod_unidad_medida um on p.unidad_medida = um.id";
+        String consulta = "SELECT\n" +
+                        "	p.id,\n" +
+                        "	p.codigo,\n" +
+                        "	p.nombre,\n" +
+                        "	ps.stock,\n" +
+                        "	c.nombre as categoria,\n" +
+                        "	um.glosa as unidad_medida,\n" +
+                        "	p.descripcion,\n" +
+                        "	case when p.estado = 0 then 'Desactivado' else 'Activo' end as estado\n" +
+                        "FROM\n" +
+                        "	productos p\n" +
+                        "	inner join categorias c on p.id_categoria = c.id\n" +
+                        "	inner join prod_unidad_medida um on p.unidad_medida = um.id\n" +
+                        "    inner join productos_stock ps on p.id = ps.id_producto and ps.id_sucursal = 1";
         
         String where = "";
         
@@ -472,9 +473,9 @@ public class mantenedor_productos extends javax.swing.JInternalFrame {
         
         if (!"".equals(stock)) {
             if (!"".equals(where)) {
-                where += " and p.stock like '%" + stock + "%'";
+                where += " and ps.stock like '%" + stock + "%'";
             } else {
-                where = " where p.stock like '%" + stock + "%'";
+                where = " where ps.stock like '%" + stock + "%'";
             }
         }
         

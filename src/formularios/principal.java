@@ -10,7 +10,11 @@ public class principal extends javax.swing.JFrame {
     private void initComponents() {
 
         escritorio = new javax.swing.JDesktopPane();
+        jPanel1 = new javax.swing.JPanel();
         lbl_usuario = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         mn_clientes = new javax.swing.JMenu();
         it_mant_clientes = new javax.swing.JMenuItem();
@@ -29,28 +33,74 @@ public class principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(137, 136, 64));
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
         lbl_usuario.setBackground(new java.awt.Color(41, 117, 154));
         lbl_usuario.setFont(new java.awt.Font("Trajan Pro", 1, 24)); // NOI18N
-        lbl_usuario.setForeground(new java.awt.Color(255, 255, 51));
+        lbl_usuario.setForeground(new java.awt.Color(0, 29, 145));
         lbl_usuario.setText("1 - zamyr");
 
-        escritorio.setLayer(lbl_usuario, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLabel1.setFont(new java.awt.Font("Trajan Pro", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 29, 145));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/usuario.png"))); // NOI18N
+        jLabel1.setText("Usuario:");
+
+        jLabel2.setFont(new java.awt.Font("Trajan Pro", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 29, 145));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/dependencia.png"))); // NOI18N
+        jLabel2.setText("Dependencia: ");
+
+        jLabel3.setFont(new java.awt.Font("Trajan Pro", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 29, 145));
+        jLabel3.setText("1 - Sucursal 1");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addGap(81, 81, 81)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_usuario)
+                    .addComponent(jLabel3))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(lbl_usuario))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        escritorio.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(escritorioLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbl_usuario)
-                .addContainerGap(559, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(133, Short.MAX_VALUE))
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(escritorioLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lbl_usuario)
-                .addContainerGap(303, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(186, Short.MAX_VALUE))
         );
 
         jMenuBar1.setFont(new java.awt.Font("Adobe Garamond Pro Bold", 0, 18)); // NOI18N
@@ -248,7 +298,11 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem it_mant_productos;
     private javax.swing.JMenuItem it_mant_proveedores;
     private javax.swing.JMenuItem it_mant_usuarios;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbl_usuario;
     private javax.swing.JMenu mn_clientes;
     private javax.swing.JMenu mn_entradas;

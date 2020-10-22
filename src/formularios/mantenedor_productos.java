@@ -19,6 +19,7 @@ public class mantenedor_productos extends javax.swing.JInternalFrame {
     String opcion;
     String estado = "";
     String usuario;
+    String depencia;
     
     public mantenedor_productos() {
         initComponents();

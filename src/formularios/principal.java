@@ -1,10 +1,15 @@
 package formularios;
 
+import static java.awt.image.ImageObserver.WIDTH;
+import javax.swing.DefaultComboBoxModel;
+import modelos.dependencias;
+
 public class principal extends javax.swing.JFrame {
     public principal() {
         initComponents();
+        llenar_cmb_dependencias();
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -14,7 +19,7 @@ public class principal extends javax.swing.JFrame {
         lbl_usuario = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        cmb_dependencias = new javax.swing.JComboBox<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         mn_clientes = new javax.swing.JMenu();
         it_mant_clientes = new javax.swing.JMenuItem();
@@ -25,11 +30,13 @@ public class principal extends javax.swing.JFrame {
         it_fechas_vencimiento = new javax.swing.JMenuItem();
         it_lista_precios_cli = new javax.swing.JMenuItem();
         it_lista_precios_prov = new javax.swing.JMenuItem();
+        it_categorias = new javax.swing.JMenuItem();
         mn_entradas = new javax.swing.JMenu();
         it_facturas = new javax.swing.JMenuItem();
         mn_ventas = new javax.swing.JMenu();
-        mn_usuarios = new javax.swing.JMenu();
+        mn_configuracion = new javax.swing.JMenu();
         it_mant_usuarios = new javax.swing.JMenuItem();
+        it_dependencias = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,9 +58,7 @@ public class principal extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/dependencia.png"))); // NOI18N
         jLabel2.setText("Dependencia: ");
 
-        jLabel3.setFont(new java.awt.Font("Trajan Pro", 1, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 29, 145));
-        jLabel3.setText("1 - Sucursal 1");
+        cmb_dependencias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -67,8 +72,8 @@ public class principal extends javax.swing.JFrame {
                 .addGap(81, 81, 81)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbl_usuario)
-                    .addComponent(jLabel3))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cmb_dependencias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -80,7 +85,7 @@ public class principal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                    .addComponent(cmb_dependencias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -93,7 +98,7 @@ public class principal extends javax.swing.JFrame {
             .addGroup(escritorioLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(133, Short.MAX_VALUE))
+                .addContainerGap(296, Short.MAX_VALUE))
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,6 +163,9 @@ public class principal extends javax.swing.JFrame {
         it_lista_precios_prov.setText("Lista de Precios Proveedores");
         mn_productos.add(it_lista_precios_prov);
 
+        it_categorias.setText("Categorías");
+        mn_productos.add(it_categorias);
+
         jMenuBar1.add(mn_productos);
 
         mn_entradas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/mercaderia.png"))); // NOI18N
@@ -178,23 +186,28 @@ public class principal extends javax.swing.JFrame {
         mn_ventas.setText("Ventas");
         jMenuBar1.add(mn_ventas);
 
-        mn_usuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/usuario.png"))); // NOI18N
-        mn_usuarios.setText("Usuarios");
-        mn_usuarios.addActionListener(new java.awt.event.ActionListener() {
+        mn_configuracion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/configurar.png"))); // NOI18N
+        mn_configuracion.setText("Configuración");
+        mn_configuracion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mn_usuariosActionPerformed(evt);
+                mn_configuracionActionPerformed(evt);
             }
         });
 
-        it_mant_usuarios.setText("Mantenedor de Usuarios");
+        it_mant_usuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/usuario_submenu.png"))); // NOI18N
+        it_mant_usuarios.setText("Usuarios");
         it_mant_usuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 it_mant_usuariosActionPerformed(evt);
             }
         });
-        mn_usuarios.add(it_mant_usuarios);
+        mn_configuracion.add(it_mant_usuarios);
 
-        jMenuBar1.add(mn_usuarios);
+        it_dependencias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/dependencia_small.png"))); // NOI18N
+        it_dependencias.setText("Dependencias");
+        mn_configuracion.add(it_dependencias);
+
+        jMenuBar1.add(mn_configuracion);
 
         setJMenuBar(jMenuBar1);
 
@@ -224,9 +237,9 @@ public class principal extends javax.swing.JFrame {
         usuarios.setVisible(true);
     }//GEN-LAST:event_it_mant_usuariosActionPerformed
 
-    private void mn_usuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn_usuariosActionPerformed
+    private void mn_configuracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn_configuracionActionPerformed
         
-    }//GEN-LAST:event_mn_usuariosActionPerformed
+    }//GEN-LAST:event_mn_configuracionActionPerformed
 
     private void it_mant_productosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_it_mant_productosActionPerformed
         String usuario =  lbl_usuario.getText();
@@ -289,7 +302,10 @@ public class principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmb_dependencias;
     private javax.swing.JDesktopPane escritorio;
+    private javax.swing.JMenuItem it_categorias;
+    private javax.swing.JMenuItem it_dependencias;
     private javax.swing.JMenuItem it_facturas;
     private javax.swing.JMenuItem it_fechas_vencimiento;
     private javax.swing.JMenuItem it_lista_precios_cli;
@@ -300,17 +316,20 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem it_mant_usuarios;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbl_usuario;
     private javax.swing.JMenu mn_clientes;
+    private javax.swing.JMenu mn_configuracion;
     private javax.swing.JMenu mn_entradas;
     private javax.swing.JMenu mn_productos;
     private javax.swing.JMenu mn_proveedor;
-    private javax.swing.JMenu mn_usuarios;
     private javax.swing.JMenu mn_ventas;
     // End of variables declaration//GEN-END:variables
-
+    private void llenar_cmb_dependencias() {
+        dependencias dp = new dependencias(WIDTH, null);
+        DefaultComboBoxModel modeloDependencias = new DefaultComboBoxModel(dp.mostrarDependencias());
+        cmb_dependencias.setModel(modeloDependencias);
+    }
     
 }
